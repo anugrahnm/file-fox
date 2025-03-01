@@ -66,6 +66,7 @@ def get_file_extensions():
         else:
             yield(ext)
 
+
 def get_file_types():
     file_extensions = get_file_extensions()
     file_ext_dict = dict((x,y) for x, y in file_extensions)
