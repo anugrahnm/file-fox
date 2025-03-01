@@ -45,7 +45,7 @@ folder_categories = {
     "Web": [".html", ".css", ".js"]
 }
 
-dir_path = r"C:\Users\anugr\OneDrive\Desktop"
+dir_path = r"C:\Users\anugr\Desktop"
 
 def files_in_folder():
     for files in os.listdir(dir_path):
