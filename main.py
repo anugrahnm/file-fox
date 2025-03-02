@@ -1,8 +1,10 @@
 import os
 import shutil
+import sys
 from tkinter import *
 from tkinter import messagebox
 from tkinter import filedialog as fd
+import tkinter
 import tkinter.font as tkFont
 
 
@@ -181,7 +183,8 @@ def run_app():
         messagebox.showinfo("File Conflict Detected!", "The destination folder already contains a file with the same name. Please rename the file and try again.")
     except FileNotFoundError:
         messagebox.showinfo("Please Select a Directory to Proceed!", "Please select a directory by clicking the 'Browse' button above.")
-
+    except tkinter.TclError:
+        pass
 
 def center_window(window):
     window.update_idletasks()
@@ -193,9 +196,22 @@ def center_window(window):
     y = (screen_height - height) // 2
     window.geometry(f"{width}x{height}+{x}+{y}")
 
+
+def resource_path(relative_path):
+    """ Get the absolute path to the resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+
 myapp = Tk()
 
-myapp.iconbitmap("logo.ico")
+icon_path = resource_path("assets/logo.ico")
+myapp.iconbitmap(icon_path)
 
 app_font = tkFont.Font(family="FiraCode Nerd Font", size=8, weight=tkFont.NORMAL)
 
