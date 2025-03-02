@@ -1,7 +1,8 @@
 import os
 import shutil
-
-
+from tkinter import *
+from tkinter import messagebox
+import tkinter.font as tkFont
 
 
 extension_to_file_type = {
@@ -160,5 +161,33 @@ def organize_files():
         else:
             pass
 
-organize_files()
 
+def run_app():
+    try:
+        organize_files()
+    except:
+        messagebox.showinfo("File Conflict Detected!", "The destination folder already contains a file with the same name. Please rename the file and try again.")
+
+
+myapp = Tk()
+myapp.iconbitmap("logo.ico")
+
+app_font = tkFont.Font(family="FiraCode Nerd Font", size=8, weight=tkFont.NORMAL)
+
+myapp.config(bg='#0F0F0F')
+myapp.title("File Organizer App")
+myapp.geometry("300x200")
+
+myapp.minsize(300,200)
+myapp.maxsize(300,200)
+
+label = Label(myapp, text="Click the Button to organize your files:", font=app_font)
+button = Button(myapp, text="Organize!", font=app_font, width=15, height=4, command=run_app)
+
+label.place(relx=0.5, rely=0.2, anchor=CENTER)
+button.place(relx=0.5, rely=0.5, anchor=CENTER)
+
+label.config(bg="teal")
+button.config(bg="teal", activebackground="#014D4E")
+
+myapp.mainloop()
