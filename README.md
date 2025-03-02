@@ -1,33 +1,33 @@
-# Simple Python File Organizer
+# 🦊FileFox - A Basic File Organizer 
 
-A basic file organizer built with Python. This project helps you organize files into categorized folders based on their type. It was created as a simple practice project to get familiar with Python.
+A GUI-based file organizer built with Python. This project helps you organize files into categorized folders based on their type. It includes a user-friendly interface and supports custom directory selection.
 
 ## Features
 
+- **GUI Directory Selection**: Choose folders interactively with a graphical interface.
 - Organizes files by their extension (e.g., images, documents, audio, video).
-- Default folder path is the Desktop. You can change the folder path by modifying the `dir_path` variable in the script.
-- Supports a predefined set of file types (you can add more types if needed).
+- Supports a predefined set of file types (customizable in the script).
 
 ## Installation
 
 ### Prerequisites
 
-**Ensure that you have Python 3.6+ installed. You can check your Python version by running:**
+**Ensure that you have Python 3.6+ installed. Check your Python version by running:**
 
 ```bash
-  python --version
+python --version
 ```
 
 #### 1. Clone the repository:
 
 ```bash
-git clone https://github.com/anugrahnm/file-organizer-python.git
+git clone https://github.com/anugrahnm/file-fox.git
 ```
 
 #### 2. Navigate to the project directory:
 
 ```bash
-cd file-organizer-python
+cd file-fox
 ```
 
 #### 3. (Optional) Create a virtual environment\*\* to keep dependencies isolated:
@@ -39,12 +39,32 @@ source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 
 ## Usage
 
-1. **Run the script:**
+#### 1. Run the script:
    ```bash
-    python organizer.py
+    python main.py
    ```
-2. **By default, the script will organize files in the Desktop folder. If you want to organize a different folder, simply change the dir_path variable in the script to your desired folder path.**
-   > **Note:** The default file path might differ on your system. You may need to adjust it accordingly.
+   - A graphical interface will open, allowing you to select a directory to organize.
+
+## Building the Executable
+### To compile the program into a standalone `.exe`:
+
+#### 1. Install PyInstaller:
+
+```bash
+  pip install pyinstaller
+```
+#### 2. Option 1: Use the included `.spec` file (recommended for simplicity, run it in the project root directory):
+```bash
+pyinstaller main.spec
+```
+- The .spec file is preconfigured to include assets and icons. The output will be in the `dist` folder.
+- If you use the .spec file, ensure paths match your project structure. [Jump to File Structure](#file-structure)
+  
+#### 3. Option 2: Clean build with custom flags:
+```bash
+pyinstaller --onefile --icon=assets/logo.ico --add-data "assets/logo.ico;assets" main.py
+```
+Use this command to rebuild from scratch. For a clean build, delete the `.spec` file first.
 
 ## Supported File Types
 
@@ -60,8 +80,19 @@ Currently, the script organizes the following file types:
 - **Steam Shortcuts**: `.url`
 - **Web**: `.html`, `.css`, `.js`
 
-Feel free to add more file types by editing the script if needed.
+Feel free to add more file types by editing the `main.py` script.
+
+## File Structure
+```
+file-fox/
+├── assets/               # Contains icons and static files
+│   ├── logo.ico          # Application icon
+│   └── logo2.ico         # Alternate icon (Not used) 
+├── main.py               # Main script with GUI
+├── main.spec             # PyInstaller configuration file
+└── README.md             # Documentation
+```
 
 ## License
 
-This is just a simple project. Feel free to use it however you like.
+This is just a simple project. Feel free to use it however you like.🦊✌️
