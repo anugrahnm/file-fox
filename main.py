@@ -2,6 +2,7 @@ import os
 import shutil
 from tkinter import *
 from tkinter import messagebox
+from tkinter import filedialog as fd
 import tkinter.font as tkFont
 
 
@@ -46,7 +47,19 @@ folder_categories = {
     "Web": [".html", ".css", ".js"]
 }
 
-dir_path = r"C:\Users\anugr\Desktop"
+# dir_path = r"C:\Users\anugr\Desktop"
+dir_path = ""
+
+def get_dir_path():
+    browse_path = fd.askdirectory(title="Select Folder To Organize:", initialdir=r"C:\Users\anugr\Desktop")
+    global dir_path
+    if len(browse_path) == 0:
+        pass
+    else:
+        dir_path = browse_path
+        label2.place(relx=0.5, rely=0.325, anchor=CENTER)
+        label2.config(text=dir_path)
+
 
 def files_in_folder():
     for files in os.listdir(dir_path):
@@ -56,7 +69,6 @@ def files_in_folder():
         else:
             yield(files)
 
-# files_in_folder()
 
 def get_file_extensions():
     file_names = files_in_folder()
@@ -165,29 +177,49 @@ def organize_files():
 def run_app():
     try:
         organize_files()
-    except:
+    except shutil.Error:
         messagebox.showinfo("File Conflict Detected!", "The destination folder already contains a file with the same name. Please rename the file and try again.")
+    except FileNotFoundError:
+        messagebox.showinfo("Please Select a Directory to Proceed!", "Please select a directory by clicking the 'Browse' button above.")
 
+
+def center_window(window):
+    window.update_idletasks()
+    width = window.winfo_width()
+    height = window.winfo_height()
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+    x = (screen_width - width) // 2
+    y = (screen_height - height) // 2
+    window.geometry(f"{width}x{height}+{x}+{y}")
 
 myapp = Tk()
+
 myapp.iconbitmap("logo.ico")
 
 app_font = tkFont.Font(family="FiraCode Nerd Font", size=8, weight=tkFont.NORMAL)
 
 myapp.config(bg='#0F0F0F')
 myapp.title("File Organizer App")
-myapp.geometry("300x200")
+center_window(myapp)
+
 
 myapp.minsize(300,200)
-myapp.maxsize(300,200)
+myapp.maxsize(900,200)
 
-label = Label(myapp, text="Click the Button to organize your files:", font=app_font)
-button = Button(myapp, text="Organize!", font=app_font, width=15, height=4, command=run_app)
+label = Label(myapp, text="Select Directory to Organize:", font=app_font)
+label2 = Label(myapp, font=app_font)
+button = Button(myapp, text="Browse", font=app_font, width=15, height=1, command=get_dir_path)
+button2 = Button(myapp, text="Organize!", font=app_font, width=25, height=3, command=run_app)
 
 label.place(relx=0.5, rely=0.2, anchor=CENTER)
-button.place(relx=0.5, rely=0.5, anchor=CENTER)
+
+button.place(relx=0.5, rely=0.45, anchor=CENTER)
+button2.place(relx=0.5, rely=0.75, anchor=CENTER)
 
 label.config(bg="teal")
+label2.config(bg="teal")
 button.config(bg="teal", activebackground="#014D4E")
+button2.config(bg="teal", activebackground="#014D4E")
 
 myapp.mainloop()
